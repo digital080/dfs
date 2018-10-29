@@ -47,39 +47,44 @@ Edges getEdges( )
 
 }
 
+void dfs(unsigned v, Graph& g, unsigned& count)
+{
+	count++;
+	g.V[v].visited = count;
+	
+  	for(auto w: g.E[v])//iterate over neighbours of node v
+  	  if ( g.V[w].visited == 0 )
+		dfs(w, g, count);
+	
+}
+
 void mainDFS(const Edges& E)
 {
-  Graph gr;
+  Graph G;	 
   
-  gr.V.resize(E.size());
+  G.V.resize(E.size());
+  G.E = E; //Hopefully the compiler optimizes this 
+  unsigned counter = 0;
   
-  unsigned count = 0;
-  
-  for(unsigned i = 0; i < gr.V.size(); i++)
+  for(unsigned i = 0; i < G.V.size(); i++)//iterate over nodes
     {
-	   if(gr.V[i].visited == 0)
-	     {
-		   counter++; //less parameters to pass :-(	  
-		     
-	       dfs(i, E, counter);		
+	   if(G.V[i].visited == 0)
+	     {		     
+	       dfs(i, G, counter);		
 	      }  
-	}  	
+     }  	
       	
-  cout<<"DFS Ranks:"<<endl;
+  cerr<<"DFS Ranks:"<<endl;
    
-  for(auto v : V)
-    cout<<v<<" ["<<v.visited<<"]"<<endl;    	
+  for(unsigned i =0; i < G.V.size();i++)
+  {
+    cerr << i<<" visited "<< G.V[i].visited << endl;
+   }
+    
 }
 	
 	
-void dfs(unsigned v, const Edges& edges)
-{
-	V[i].visited = count;
-  	for(auto w: edges[v])
-  	  if (
-  	
-	
-}
+
 
 int main()
 {
