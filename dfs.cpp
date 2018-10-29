@@ -47,15 +47,18 @@ Edges getEdges( )
 
 }
 
-void dfs(unsigned v, Graph& g, unsigned& count)
+void dfs(unsigned v, Graph& g, unsigned& count, unsigned& num)
 {
 	count++;
 	g.V[v].visited = count;
 	
-  	for(auto w: g.E[v])//iterate over neighbours of node v
-  	  if ( g.V[w].visited == 0 )
-		dfs(w, g, count);
 	
+	
+  	for(auto w: g.E[v])//iterate over neighbours of node v
+  	  if ( g.V[w].visited == 0 ){
+		dfs(w, g, count, num);
+				
+	}
 }
 
 void mainDFS(const Edges& E)
@@ -65,22 +68,26 @@ void mainDFS(const Edges& E)
   G.V.resize(E.size());
   G.E = E; //Hopefully the compiler optimizes this 
   unsigned counter = 0;
+  unsigned num = 0;
   
   for(unsigned i = 0; i < G.V.size(); i++)//iterate over nodes
     {
 	   if(G.V[i].visited == 0)
 	     {		     
-	       dfs(i, G, counter);		
+	       dfs(i, G, counter, num);
+	       num++;		
 	      }  
      }  	
       	
   cerr<<"DFS Ranks:"<<endl;
    
+   
   for(unsigned i =0; i < G.V.size();i++)
   {
     cerr << i<<" visited "<< G.V[i].visited << endl;
-   }
     
+   }
+    cerr << " Components Visited "<< num << endl;
 }
 	
 	
